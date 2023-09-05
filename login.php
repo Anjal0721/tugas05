@@ -1,3 +1,32 @@
+<?php
+session_start();
+require_once('koneksi.php');
+
+// Inisialisasi variabel untuk menyimpan pesan kesalahan
+$error = '';
+
+// Cek apakah form telah disubmit
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Ambil data yang dikirimkan dari form
+    $nama = $_POST['nama'];
+    $password = $_POST['password'];
+
+    // Query untuk mencari pengguna berdasarkan username
+    $query = "SELECT * FROM user WHERE nama = '$nama' AND password = '$password'";
+    $result = $conn->query($query);
+    $row = $result->fetch_assoc();
+    $cek = mysqli_num_rows($result);
+    if ($cek > 0) {
+            // Kata sandi cocok, buat sesi login
+            $_SESSION['nama'] = $nama;
+            header('Location: index.php'); // Redirect ke halaman berhasil login
+    } else {
+        // Pengguna tidak ditemukan
+        $error = 'Username atau password salah!';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +34,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Not Found 404 - NiceAdmin Bootstrap Template</title>
+  <title>Forms / Layouts - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -40,25 +69,46 @@
 
 <body>
 
-  <main>
-    <div class="container">
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-4" style="margin:auto; margin-top:10%;">
 
-      <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
-        <h1>404</h1>
-        <h2>The page you are looking for doesn't exist.</h2>
-        <a class="btn" href="index.html">Back to home</a>
-        <img src="assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title" style="text-align: center;font-size:30px;">LOGIN</h3>
+
+              <!-- Horizontal Form -->
+              <form method="POST" action="login.php">
+              <?php if (!empty($error)) { ?>
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <?php echo $error; ?>
+                        </div>
+                    <?php } ?>
+                <div class="row mb-3">
+                    <input type="text" class="form-control" id="inputText"  name="nama" placeholder="Name">
+                </div>
+               
+                <div class="row mb-3">
+                    <input type="password" class="form-control" id="inputPassword" name="password"  placeholder="Password">
+                </div>
+               
+                </fieldset>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form><!-- End Horizontal Form -->
+
+            </div>
+          </div>
+
+         
+
         </div>
-      </section>
 
-    </div>
-  </main><!-- End #main -->
+        
+      </div>
+    </section>
+
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

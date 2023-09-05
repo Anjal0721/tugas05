@@ -1,3 +1,10 @@
+<?php
+session_start();
+        if (!isset($_SESSION['nama'])) {
+            header('Location: login.php');
+            exit();
+        }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -282,7 +289,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " href="tables-data.html">
+        <a class="nav-link " href="user.php">
           <i class="bi bi-grid"></i>
           <span>User</span>
         </a>
@@ -301,9 +308,10 @@
           <span>Transaksi</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <li class="nav-heading">Pages</li>
-
-    </ul>
+ 
+    </ul><div class="text-center">
+    <a href="logout.php" class="btn btn-danger">Logout</a>
+</div>
 
   </aside><!-- End Sidebar-->
 

@@ -278,14 +278,14 @@ $tampil=$conn->query("SELECT * FROM user");
 
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="index.php">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " href="tables-data.html">
+        <a class="nav-link " href="user.php">
           <i class="bi bi-grid"></i>
           <span>User</span>
         </a>
@@ -340,6 +340,7 @@ $tampil=$conn->query("SELECT * FROM user");
                     <th scope="col">Gmail</th>
                     <th scope="col">Nomor_Hp</th>
                     <th scope="col">Alamat</th>
+                    <th colspan="2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -352,6 +353,8 @@ $tampil=$conn->query("SELECT * FROM user");
                     <td><?=$us['gmail']?></td>
                     <td><?=$us['nomor_hp']?></td>
                     <td><?=$us['alamat']?></td>
+                    <td><a href="delete.php?id=<?=$us['id_user']?>">Delete</a></td>
+            <td><a href="edit.php?id=<?=$us['id_user']?>">Edit</a></td>
                   </tr>
                   <?php }?>
                 </tbody>
